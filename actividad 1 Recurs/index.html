@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Factorial</title>
+    <style>
+        :root {
+            --primary-color: #e67e22; /* Naranja cálido */
+            --primary-hover: #d35400; /* Naranja oscuro para hover */
+            --error-color: #c0392b; /* Rojo para errores */
+            --bg-color: #fffaf0; /* Fondo crema suave */
+            --text-color: #2c3e50; /* Gris oscuro para buen contraste */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.2);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid var(--primary-color);
+        }
+
+        h1 { color: var(--primary-color); margin-bottom: 1.5rem; }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        button {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover { background-color: var(--primary-hover); }
+
+        #result {
+            margin-top: 1.5rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+            min-height: 1.5rem;
+        }
+
+        .error { color: var(--error-color); }
+    </style>
+</head>
+<body>
+
+    <main class="container">
+        <h1>Calculadora de Factorial</h1>
+        <input type="number" id="numberInput" placeholder="Ingresa un número entero >= 0" min="0">
+        <button id="calcBtn">Calcular Factorial</button>
+        <div id="result"></div>
+    </main>
+
+    <script>
+        /**
+         * Función recursiva para calcular el factorial de un número n.
+         * Caso base: n == 0 o n == 1 retorna 1.
+         * Caso recursivo: n * calcularFactorial(n - 1).
+         * @param {number} n - El número entero a calcular.
+         * @returns {number} - El factorial del número.
+         */
+        function calcularFactorial(n) {
+            // Caso base: 0! = 1 y 1! = 1
+            if (n === 0 || n === 1) {
+                return 1;
+            }
+            // Caso recursivo: n! = n * (n-1)!
+            return n * calcularFactorial(n - 1);
+        }
+
+        const input = document.getElementById('numberInput');
+        const button = document.getElementById('calcBtn');
+        const resultDiv = document.getElementById('result');
+
+        button.addEventListener('click', () => {
+            const val = input.value;
+            const n = parseInt(val);
+
+            // Validación: ¿Es un número? ¿Es mayor o igual a 0?
+            if (val === "" || isNaN(n) || n < 0) {
+                resultDiv.innerHTML = '<span class="error">Por favor, ingresa un número entero positivo válido.</span>';
+                return;
+            }
+
+            // Cálculo
+            const factorial = calcularFactorial(n);
+            resultDiv.innerText = `El factorial de ${n} es: ${factorial}`;
+        });
+    </script>
+</body>
+</html>
